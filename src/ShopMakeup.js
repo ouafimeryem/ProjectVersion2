@@ -21,7 +21,7 @@ function ShopMakeup() {
    }, []);
 
    const getProducts = async () => {
-     const response = await fetch("https://makeup.p.rapidapi.com/products.json?product_category=lipstick&brand=colourpop", {
+     const response = await fetch("https://makeup.p.rapidapi.com/products.json?product_category=lipstick&id=1047&brand=colourpop", {
       "method": "GET",
       "headers": {
         "x-rapidapi-key": "f0d3eaf5a8mshd838917fecf0184p13e861jsnc237531769a0",
@@ -30,6 +30,9 @@ function ShopMakeup() {
      });
      const datas = await response.json();
      setProducts(datas);
+     console.log(datas[0]);
+     
+
    
     
     
@@ -52,8 +55,8 @@ function ShopMakeup() {
       <div className="page">
       <div className="container">
         <div  className="products">
-      {productss.map(product=>(
-        <Product key={product.name} title={product.name} image={product.image_link} price={product.price} />
+      {productss.map((product,index)=>(
+        <Product key={product.name} count={index} title={product.name} image={product.image_link} price={product.price} />
       ))}
 </div></div></div>
       

@@ -2,8 +2,9 @@ import React, { useEffect } from 'react'
 import './Product.css'
 import Aos from "aos";
 import "aos/dist/aos.css";
+import {Link} from 'react-router-dom'
 
-const Product = ({title,image,price}) => {
+const Product = ({count,title,image,price}) => {
   useEffect(() => {
     Aos.init({duration:2000})
     
@@ -11,6 +12,7 @@ const Product = ({title,image,price}) => {
   // const images = `https://${image}`;
   
   return (
+    <Link to={'/ProductPage/'+count }>
     <div data-aos="slide-right" className="product">
       {/* <button className="btn1" type="submit">
                     <i className="fa fa-heart"></i>
@@ -24,7 +26,9 @@ const Product = ({title,image,price}) => {
       <h6>{title}</h6>
       <p>{price}</p>
       
+      
     </div>
+    </Link>
   )
 }
 

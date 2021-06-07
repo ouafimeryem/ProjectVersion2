@@ -56,7 +56,7 @@ export default class Header extends Component {
               <a href="#" className="nav-link"><i className="fa fa-heart"> </i></a>
             </li>
             <li className="nav-item">
-              <a href="#" className="nav-link"><i className="fa fa-shopping-cart"> </i></a>
+              <a href="#" className="nav-link"><NavLink to="/cart" exact className="nav-link" activeStyle={{fontWeight:"bold",color:"#fada5f"}}><i className="fa fa-shopping-cart"> </i></NavLink></a>
             </li>
 
           </ul>
