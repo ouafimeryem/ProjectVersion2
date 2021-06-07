@@ -15,7 +15,10 @@ import Top from './Top';
 import Login from './Login'
 import SignUp from './SignUp';
 import LoginPage from './LoginPage';
-import Protected from './protected';
+
+import ProductPage from './ProductPage'
+import Cart from './Cart'
+
 
 
 function App() {
@@ -27,8 +30,12 @@ function App() {
         <Route path="/Shop">
             <Menu/>
           </Route>
+          <Route path="/productPage/:id" component={ProductPage} />
           <Route path="/login">
             <Login/>
+          </Route>
+          <Route path="/cart">
+            <Cart />
           </Route>
           <Route path="/signIn" >
             <SignUp/>
