@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import './Header.css'
 import logo from './images/d2.png'
 import {NavLink} from 'react-router-dom'
+import NavDropDown from 'react-bootstrap/NavDropdown'
+import { withRouter } from "react-router-dom";
 
-
-
-export default class Header extends Component {
+class Header extends Component {
   state = {
     isBoxVisible:false
   };
@@ -13,9 +13,17 @@ export default class Header extends Component {
     this.setState(prevState => ({ isBoxVisible: !prevState.isBoxVisible }));
   };
   
+  logOut = () => {
+      localStorage.clear();
+      this.props.history.push("/homepage");
+  };
   
   render() {
     const { isBoxVisible } = this.state;
+
+    let user = JSON.parse(localStorage.getItem("user-info"))
+
+
     return (
       <div className={`box ${isBoxVisible ? "open" : "hidden"}`}>
     <div className="header">
@@ -42,12 +50,36 @@ export default class Header extends Component {
                   </button>
                     
             </li> */}
-            <li className="nav-item"><NavLink to="/" exact className="nav-link" activeStyle={{fontWeight:"bold",color:"#fada5f"}}>
+          {
+            localStorage.getItem('user-info') ?
+            <>
+              <li className="nav-item"><NavLink to="/" exact className="nav-link" activeStyle={{fontWeight:"bold",color:"#fada5f"}}>
+              Home</NavLink>
+            </li>
+            <li className="nav-item dropdown"><NavLink to="/shop" exact className="nav-link" activeStyle={{fontWeight:"bold",color:"#fada5f"}}>
+              Our Shop</NavLink>
+            </li>
+            <li className="nav-item">
+              <a href="#" className="nav-link"><i className="fa fa-heart"> </i></a>
+            </li>
+            <li className="nav-item">
+              <a href="#" className="nav-link"><i className="fa fa-shopping-cart"> </i></a>
+            </li>
+            <li>
+              <NavDropDown title={user && user.name}>
+                <NavDropDown.Item id="logout" onClick={this.logOut}>Logout</NavDropDown.Item>
+              </NavDropDown>
+            </li>
+            </>
+            :
+            <>
+              <li className="nav-item"><NavLink to="/" exact className="nav-link" activeStyle={{fontWeight:"bold",color:"#fada5f"}}>
             Home</NavLink>
             </li>
             <li className="nav-item dropdown"><NavLink to="/shop" exact className="nav-link" activeStyle={{fontWeight:"bold",color:"#fada5f"}}>Our Shop</NavLink>
               
             </li>
+
             <li className="nav-item"><NavLink to="/login" exact className="nav-link" >
             Login</NavLink>
             </li>
@@ -58,10 +90,11 @@ export default class Header extends Component {
             <li className="nav-item">
               <a href="#" className="nav-link"><i className="fa fa-shopping-cart"> </i></a>
             </li>
-
+            </>
+          }       
           </ul>
           </nav>
-
+          
       </div>
       </div>
       {/* <div className={`box ${isMenuVisible ? "menu" : "hidden"}`}>
@@ -89,13 +122,8 @@ export default class Header extends Component {
         </div> 
       </div>*/}
       </div>
-
-
-      
     )
   }
 }
 
-
-
-
+export default withRouter(Header);
