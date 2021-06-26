@@ -1,9 +1,23 @@
 import React,{useEffect, useRef} from 'react'
-import {Link,NavLink} from "react-router-dom"
+import {Link,NavLink,useHistory} from "react-router-dom"
 import './Login.css'
 import gsap from 'gsap'
+import {useState} from "react";
+
+import usePLoader from './usePLoader';
 
 const Login = ()=> {
+  const [loader, showLoader, hideLoader] = usePLoader()
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+
+  const history = useHistory()
+  useEffect(()=>{
+    if (localStorage.getItem('user-info')){
+      history.push("/homePage")
+    }
+  },[])
+
   let line1= useRef(null);
   let line2= useRef(null);
   let form= useRef(null);
@@ -27,11 +41,28 @@ const Login = ()=> {
     })
   },[line1,line2])
 
-
-
-
-
-  
+  async function login() {
+    showLoader()
+    let item = {
+      email, 
+      password
+    }
+    let result = await fetch("http://localhost:8000/api/login", {
+      method: "POST",
+      headers:{
+        "content-type":"application/json",
+        "Accept":"*/*"
+      },
+    
+      body:JSON.stringify(item)
+      
+    });
+    result = await result.json();
+    console.warn(result)
+    localStorage.setItem("user-info", JSON.stringify(result))
+    history.push('/homepage')
+    hideLoader()
+  }
 
   return (
     <div className="inner">
@@ -46,41 +77,48 @@ const Login = ()=> {
     <h1 className="page-title">
       <div className="line-wrap">
         <div ref={el => line1 = el} className="line ">
-          Hello, New here ?
+          One of Us Already
         </div>
       </div>
       <div className="line-wrap">
         <div ref={el => line2 = el} className="line line2">
-          Join Us Now.
+          We missed you.
         </div>
       </div>
     </h1>
-   
-
     </div>
     <div>
       <div ref={el => form = el} className="info1">
         <div class="login-form">
-     
      <div class="form-group ">
-       <input type="text" class="form-control" placeholder="Username " id="UserName" />
-       
+       <input 
+          type="text" 
+          class="form-control" 
+          placeholder="Email" 
+          id="UserName" 
+          onChange={(e)=>setEmail(e.target.value)}
+          />
      </div>
      <div class="form-group log-status">
-       <input type="password" class="form-control" placeholder="Password" id="Password"/>
-       
+       <input 
+          type="password" 
+          class="form-control" 
+          placeholder="Password" 
+          id="Password"
+          onChange={(e)=>setPassword(e.target.value)}
+          />
      </div>
-      
       <a class="link" href="#">Lost your password?</a>
-     <button type="button" class="log-btn" >Log in</button>
-     
-    
+     <button 
+        type="button" 
+        class="log-btn" 
+        onClick={login}
+        >Log in</button>
    </div>
-
-
       </div>
     </div>
     </div>
+    {loader}
     </div>
   )
 }

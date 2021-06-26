@@ -14,26 +14,26 @@ function ShopWomen() {
   // const bags_id = "200010063";
   // const shoes_id = "100001606";
   
-  // const [productss,setProducts] =useState([]);
+  const [productss,setProducts] =useState([]);
 
-  //  useEffect(() => {
-  //    getProducts();
-  //  }, []);
+    useEffect(() => {
+      getProducts();
+    }, []);
 
-  //  const getProducts = async () => {
-  //    const response = await fetch("https://asos2.p.rapidapi.com/products/v2/list?store=US&offset=0&categoryId=4877&limit=48&country=US&sort=freshness&currency=USD&sizeSchema=US&lang=en-US", {
-  //      "method": "GET",
-  //      "headers": {
-  //        "x-rapidapi-key": "f0d3eaf5a8mshd838917fecf0184p13e861jsnc237531769a0",
-  //        "x-rapidapi-host": "asos2.p.rapidapi.com"
-  //      }
-  //    });
-  //    const datas = await response.json();
-  //    setProducts(datas.products);
+    const getProducts = async () => {
+      const response = await fetch("https://asos2.p.rapidapi.com/products/v2/list?store=US&offset=0&categoryId=4877&limit=48&country=US&sort=freshness&currency=USD&sizeSchema=US&lang=en-US", {
+       "method": "GET",
+       "headers": {
+         "x-rapidapi-key": "f0d3eaf5a8mshd838917fecf0184p13e861jsnc237531769a0",
+         "x-rapidapi-host": "asos2.p.rapidapi.com"
+       }
+     });
+     const datas = await response.json();
+     setProducts(datas.products);
     
     
     
-  //  }
+    }
 
   return (
     <div className="all" >
@@ -51,9 +51,9 @@ function ShopWomen() {
       <div className="page">
       <div className="container">
         <div  className="products">
-      {/* {productss.map(product=>(
-        <Product key={product.id} title={product.name} image={product.imageUrl} price={product.price.current.text} />
-      ))} */}
+      {productss.map(product=>(
+        <Product key={product.id} id={product.id} title={product.name} image={product.imageUrl} price={product.price.current.text} />
+      ))}
 </div></div></div>
       
 

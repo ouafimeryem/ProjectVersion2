@@ -14,15 +14,16 @@ import Top from './Top';
 
 import Login from './Login'
 import SignUp from './SignUp';
-import LoginPage from './LoginPage';
+
 import ProductPage from './ProductPage'
 import Cart from './Cart'
+import ProductPage1 from './ProductPage1';
 
 
 function App() {
   return (
     <div className="app">
-     
+  
 
       <Router>
         
@@ -31,7 +32,7 @@ function App() {
             <Menu/>
             
           </Route>
-          <Route path="/productPage/:id" component={ProductPage} />
+          <Route path="/productPage/:id" component={ProductPage1} />
           <Route path="/login">
             <Login/>
             
