@@ -4,7 +4,11 @@ import './Login.css'
 import gsap from 'gsap'
 import {useState} from "react";
 
+
+import usePLoader from './usePLoader';
+
 const Login = ()=> {
+  const [loader, showLoader, hideLoader] = usePLoader()
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -40,6 +44,9 @@ const Login = ()=> {
   },[line1,line2])
 
   async function login() {
+
+    showLoader()
+
     let item = {
       email, 
       password
@@ -50,12 +57,19 @@ const Login = ()=> {
         "content-type":"application/json",
         "Accept":"*/*"
       },
+
+    
       body:JSON.stringify(item)
+      
+
     });
     result = await result.json();
     console.warn(result)
     localStorage.setItem("user-info", JSON.stringify(result))
     history.push('/homepage')
+
+    hideLoader()
+
   }
 
   return (
@@ -112,6 +126,7 @@ const Login = ()=> {
       </div>
     </div>
     </div>
+    {loader}
     </div>
   )
 }
