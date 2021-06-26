@@ -3,7 +3,9 @@ import {Link,NavLink,useHistory} from "react-router-dom"
 import './Login.css'
 import gsap from 'gsap'
 import {useState} from "react";
+
 import usePLoader from './usePLoader';
+
 
 const SignUp = () => {
 
@@ -12,14 +14,18 @@ const SignUp = () => {
       history.push("/homePage")
     }
   },[])
+
   const [loader, showLoader, hideLoader] = usePLoader()
+
   const [name, setName] = useState("")
   const [password, setPassword] = useState("")
   const [email, setEmail] = useState("")
   const history = useHistory()
 
   async function regiter() {
+
     showLoader()
+
     let item = {
       name, password, email
     }
@@ -35,7 +41,9 @@ const SignUp = () => {
 
     localStorage.setItem("user-info", JSON.stringify(result))
     history.push("/homePage")
+
     hideLoader()
+
   }
 
   let line1= useRef(null);
